@@ -17,7 +17,6 @@ vector<int64_t>freq(fqsz);
 struct node{
     int l;
     bool is_l;
-    int bv;
     int height;
     int64_t freq;
     node *left;

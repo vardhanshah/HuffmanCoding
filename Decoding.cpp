@@ -51,7 +51,7 @@ void codewords(node *itr,string s)
 {
     if(itr->left == NULL && itr->right==NULL)
     {
-        cout << (itr->l) << " " << s << endl;
+       cout << (itr->l) << " " << s << endl;
         return;
     }
     codewords(itr->left,s+'0');
@@ -73,7 +73,7 @@ int main(int args,char **argc)
     in.close(); 
    
     node *root = configure();
-    codewords(root,""); 
+    //codewords(root,""); 
     Decode(root,argc[2]);
     return 0;
 }
