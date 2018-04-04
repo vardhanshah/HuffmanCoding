@@ -3,21 +3,10 @@
 This is huffman code implementation
 
 It will only work for text files.
- 
 
-To compress:
+Here I have provided words.txt, which contains around 479k words and its size is 5.3 MB
 
-- compile Encoding.cpp.
--  ./Encoding <your text file>
-
-Here two files will be generated <your text file>_frequalibility, <your text file>_compressed
-
-To uncompress:
-
-- compile Decoding.cpp
-- ./Decoding <your text file>_frequalibility, <your text file>_compressed.
-
-Example:
+Let's apply compression to words.txt
 
 To compress:
 
@@ -25,6 +14,7 @@ To compress:
 - ./Encoding words.txt
 
 Two files, words.txt_freqability and words.txt_compressed will be generated.
+words.txt_compressed file is compressed file which is size of 3 MB.
 
 To uncompress:
 
@@ -34,14 +24,13 @@ To uncompress:
 words.txt_uncompressed file will be generated.
 
 
-
 This implementation is also limited to unix based system.
 But you can modify the code for other system.
 
 At implementation side,
 
-- HuffmanCoding.hpp contains common set of components required for Encoding.cpp and Decoding.cpp
-  mainly, It builds huffman tree structure based upon freuquencies provided.
+- HuffmanCoding.hpp file contains common set of components required for Encoding.cpp and Decoding.cpp
+  mainly, It will build huffman tree based upon freuquencies provided.
   
   It provides Huffman Tree via configure() call.
   configure() call return pointer to root of huffman tree.
