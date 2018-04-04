@@ -14,29 +14,31 @@ void Decode(node *root,char *fname)
     char c;
     while(in.get(c))
     {
-        bitstring += bits_in_byte( byte(c) ).to_string() ; // append as string of '0' '1'
-    }
+        bitstring = bits_in_byte( byte(c) ).to_string() ; // append as string of '0' '1'
     //ofstream tout("binary_receive");
     //tout << bitstring << endl;
-    for(int i=0;i<needed_to_read;i++)
-    {
-        if(bitstring[i]=='1')
+        int i=0;
+        while(needed_to_read&&i<bitstring.size())
         {
-            if(itr->right==NULL)
+            if(bitstring[i]=='1')
             {
-                out << char(itr->l);
-                itr=root;
+                if(itr->right==NULL)
+                {
+                    out << char(itr->l);
+                    itr=root;
+                }
+                    itr=itr->right;
             }
-                itr=itr->right;
-        }
-        else
-        {
-            if(itr->left==NULL)
+            else
             {
-                out << char(itr->l);
-                itr=root;
+                if(itr->left==NULL)
+                {
+                    out << char(itr->l);
+                    itr=root;
+                }
+                    itr=itr->left;
             }
-                itr=itr->left;
+            needed_to_read--;i++;
         }
     }
     if(itr->left==NULL && itr->right==NULL)

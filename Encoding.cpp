@@ -13,7 +13,7 @@ void codewords(node *itr,string s)
 {
     if(itr->left == NULL && itr->right==NULL)
     {
-        cout << itr->l << " " << s << endl;
+       // cout << itr->l << " " << s << endl;
         codes[itr->l]=s;
         if(s.size()>mxlen)
             mxlen=s.size();
@@ -39,26 +39,35 @@ void input(char *fname)
     in.close();
 }
 
-void write(const char *fname)
+void writeString(ofstream &out,const string &bitstring)
 {
-    string bitstring;
-    ifstream in(fname);
-    char c;
-    while(in.get(c))
-        bitstring+=codes[int(byte(c))];
-    total_written=bitstring.size();
-    while(bitstring.size() % BITS_PER_BYTE)bitstring+='0';    
-    in.close();
-    //ofstream tout("binary");
-    //tout << bitstring << endl;tout.close();
-    string wf(fname);wf+="_compressed";
-    ofstream out(wf,ios::binary);
     for(size_t i=0;i<bitstring.size();i+=BITS_PER_BYTE)
     {
         byte b = bits_in_byte(bitstring.substr(i,BITS_PER_BYTE)).to_ulong();
         out << b;
-        //out << bits_in_byte(bitstring.substr(i,BITS_PER_BYTE));
     }
+}
+
+void write(const char *fname)
+{
+    string bitstring;
+    ifstream in(fname);
+    string wf(fname);wf+="_compressed";
+    ofstream out(wf,ios::binary);
+    char c;
+    while(in.get(c))
+    {
+        total_written+=codes[int(byte(c))].size();
+        bitstring+=codes[int(byte(c))];
+        if(bitstring.size()%BITS_PER_BYTE==0)
+        {
+            writeString(out,bitstring);
+            bitstring.clear();
+        }
+    }
+    while(bitstring.size() % BITS_PER_BYTE)bitstring+='0';    
+    writeString(out,bitstring);
+    in.close();
     out.close();
 }
 void write_freqability(char *fname)
